@@ -1,0 +1,64 @@
+go to gitbash -> cat .pem (fileName)
+EX:-cat devops.pem
+================
+pipeline{
+	agent any
+	stages{
+		stage('welcome'){
+		    steps{
+			    echo 'welcome to Jenkins Scripting'
+		    }
+		}
+	}
+}
+========================================
+
+pipeline{
+	agent any
+	stages{
+		stage('Cloning Code'){
+		    steps{
+			    echo 'cloning from git'
+		    }
+		}
+		stage('Code Build'){
+		    steps{
+			    echo 'Build the code'
+		    }
+		}
+	}
+}
+==================================
+pipeline{
+	agent any
+	environment{PATH: maven-path}
+	stages{
+		stage('Get Code'){
+		steps{
+			git 'repo-url'
+			echo 'cloning from git'
+		    }
+		}
+		stage('Build code'){
+		steps{
+			sh 'mvn clean package'
+			echo 'Build the code'
+		    }
+		}
+		stage('Code Review'){
+		steps{
+			withSonarEnvironment('sonar-server-7.8')
+			echo 'Code Review'
+		    }
+		}
+		stage('Deploy'){
+		steps{
+	sshagent(['Tomcat-server-agent']) {
+	//copy war from jenkins server to tomcat server-webapp-folder
+	echo 'Deploy'
+		}		
+			
+		    }
+		}
+	}
+}
