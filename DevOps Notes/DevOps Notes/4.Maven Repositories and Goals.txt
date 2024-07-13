@@ -302,6 +302,10 @@ creating web application using maven
 >> mvn archetype:generate -DarchetypeArtifactId=maven-archetype-webapp -DgroupId=in.ashokit -DartifactId=01-maven-web-app -DinteractiveMode=false
 
 
+mvn clean install dependency:copy-dependencies -DskipTests
+
+mvn -U clean install -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true dependency:copy-dependencies -DskipTests
+
 
 
 
